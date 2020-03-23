@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Shoe;
 
 class ShoeController extends Controller
 {
@@ -13,7 +14,8 @@ class ShoeController extends Controller
      */
     public function index()
     {
-        //
+        $shoes = Shoe::all();
+        dd($shoes);
     }
 
     /**
@@ -23,7 +25,7 @@ class ShoeController extends Controller
      */
     public function create()
     {
-        //
+        return view('shoes.create');
     }
 
     /**
@@ -34,7 +36,21 @@ class ShoeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+    //    dd($request->all());
+       $data = $request->all();
+       $shoe = new Shoe;
+       $shoe->ean = $data['ean'];
+       $shoe->brand = $data['brand'];
+       $shoe->price = $data['price'];
+       $shoe->typology = $data['typology'];
+       $shoe->genre = $data['genre'];
+       $shoe->year = $data['year'];
+
+       $save = $shoe->save();
+
+       if($save) {
+           return redirect()->route('shoes.index');
+       }
     }
 
     /**
