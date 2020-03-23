@@ -6,5 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Shoe extends Model
 {
-    //
+    protected $fillable = [
+     'ean',
+     'brand',
+     'price',
+     'typology',
+     'genre',
+     'year'
+    ];
 }
