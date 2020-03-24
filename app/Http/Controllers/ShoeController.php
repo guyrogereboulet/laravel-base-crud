@@ -7,6 +7,15 @@ use App\Shoe;
 
 class ShoeController extends Controller
 {
+
+    private $validationShoe = [
+     'ean' => 'required|string|max:255',
+     'brand' => 'required|string|max:255',
+     'typology' => 'required|string|max:255',
+     'genre' => 'required|string|max:255',
+     'year' => 'required|string',
+     'price' => 'required|numeric|min:1|max:999999.99',
+   ];
     /**
      * Display a listing of the resource.
      *
@@ -135,14 +144,13 @@ class ShoeController extends Controller
           abort('404');
         }
         $data = $request->all();
-        $request->validate([
-         'ean' => 'required|string|max:255',
-         'brand' => 'required|string|max:255',
-         'typology' => 'required|string|max:255',
-         'genre' => 'required|string|max:255',
-         'year' => 'required|string',
-         'price' => 'required|numeric|min:1|max:999999.99',
-       ]);
+        $request->validate($this->validationShoe);
+        $updated = $shoe->update($data);
+        if($updated) {
+           //Ritorno alla index dell'item aggiornato
+           $shoe = Shoe::find($id);
+            return redirect()->route('shoes.show', compact('shoe'));
+        }
 
     }
 
