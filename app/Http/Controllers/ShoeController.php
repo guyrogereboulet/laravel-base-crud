@@ -50,8 +50,8 @@ class ShoeController extends Controller
         'brand' => 'required|string|max:255',
         'typology' => 'required|string|max:255',
         'genre' => 'required|string|max:255',
-        'year' => 'required|string|max:4',
-        'price' => 'required|numeric|min:255|max:999999.99',
+        'year' => 'required|string',
+        'price' => 'required|numeric|min:1|max:999999.99',
       ]);
 
 
@@ -69,8 +69,9 @@ class ShoeController extends Controller
 
        //Se i dati vengono veramente salvati
        if($save) {
-          //Ritorno alkla index
-           return redirect()->route('shoes.index');
+          //Ritorno alla index dell'item compilato
+          $shoe = Shoe::orderBy('id','desc')->first();
+           return redirect()->route('shoes.show', compact('shoe'));
        }
 
        dd('Non salvato');
@@ -82,9 +83,26 @@ class ShoeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    //Primo modo
+    // public function show($id)
+    // {
+    //     $shoe = Shoe::find($id);
+    //     if (empty($shoe)) {
+    //       abort('404');
+    //     }
+    //
+    //     return view('shoes.show', compact('shoe'));
+    // }
+
+    //Secondo modo
+    public function show(Shoe $shoe)
     {
-        //
+        // $shoe = Shoe::find($id);
+        if (empty($shoe)) {
+          abort('404');
+        }
+
+        return view('shoes.show', compact('shoe'));
     }
 
     /**
