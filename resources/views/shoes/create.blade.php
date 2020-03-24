@@ -2,6 +2,16 @@
 
 @section('header')
   <h1>Insert a shoe</h1>
+  {{-- Stampa un errore se non inseriamo dei dati che non rispettino i criteri --}}
+ @if ($errors->any())
+  <div class="alert alert-danger">
+      <ul>
+       @foreach ($errors->all() as $error)
+           <li>{{ $error }}</li>
+       @endforeach
+      </ul>
+  </div>
+ @endif
 @endsection
 
 @section('main')

@@ -44,6 +44,17 @@ class ShoeController extends Controller
        ///Primo modo per salvare sul database
        // dd($request->all());
        $data = $request->all();
+
+       $request->validate([
+        'ean' => 'required|string|max:255',
+        'brand' => 'required|string|max:255',
+        'typology' => 'required|string|max:255',
+        'genre' => 'required|string|max:255',
+        'year' => 'required|string|max:4',
+        'price' => 'required|numeric|min:255|max:999999.99',
+      ]);
+
+
        $shoe = new Shoe;
        // $shoe->ean = $data['ean'];
        // $shoe->brand = $data['brand'];
