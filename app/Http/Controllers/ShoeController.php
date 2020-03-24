@@ -13,9 +13,12 @@ class ShoeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   ///Mi connetto al database che mostra tutti i risultati con all()
         $shoes = Shoe::all();
-        dd($shoes);
+
+        //Passo la variablile $shoes alla index della nostra view
+        return view('shoes.index', compact('shoes'));
+
     }
 
     /**
