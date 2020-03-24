@@ -37,23 +37,32 @@ class ShoeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    // l'oggetto request va a prendere tutti i dati che passiamo tramite la POST (dependencies Injection)
     public function store(Request $request)
     {
-    //    dd($request->all());
+       ///Primo modo per salvare sul database
+       // dd($request->all());
        $data = $request->all();
        $shoe = new Shoe;
-       $shoe->ean = $data['ean'];
-       $shoe->brand = $data['brand'];
-       $shoe->price = $data['price'];
-       $shoe->typology = $data['typology'];
-       $shoe->genre = $data['genre'];
-       $shoe->year = $data['year'];
+       // $shoe->ean = $data['ean'];
+       // $shoe->brand = $data['brand'];
+       // $shoe->price = $data['price'];
+       // $shoe->typology = $data['typology'];
+       // $shoe->genre = $data['genre'];
+       // $shoe->year = $data['year'];
 
+       ///Secondo modo per salvare sul database
+       $shoe->fill($data);
        $save = $shoe->save();
 
+       //Se i dati vengono veramente salvati
        if($save) {
+          //Ritorno alkla index
            return redirect()->route('shoes.index');
        }
+
+       dd('Non salvato');
     }
 
     /**
